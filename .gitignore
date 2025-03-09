@@ -1,1 +1,32 @@
-.env
+# Ignore environment-specific files
+.env  # Contains sensitive authentication keys and environment variables
+
+# Ignore Python cache files
+__pycache__/  # Prevents storing compiled Python bytecode files
+*.pyc  # Cached Python files
+*.pyo  # Cached Python files
+
+# Ignore virtual environment (if created in the project folder)
+venv/  # Prevents committing virtual environment dependencies
+
+# Ignore logs and temporary files
+*.log  # Excludes log files
+logs/  # Directory for logs
+*.tmp  # Temporary files
+*.swp  # Temporary swap files (e.g., from Vim)
+
+# Ignore dependency management files (optional)
+pip-log.txt  # If pip logs are generated
+pip-delete-this-directory.txt  # If pip cache issues arise
+
+# Ignore database files (if applicable)
+*.sqlite3  # SQLite database files
+
+# Ignore system-specific files
+.DS_Store  # macOS system file
+Thumbs.db  # Windows system file
+
+# Ignore IDE and editor settings (optional)
+.vscode/  # VS Code settings
+.idea/  # JetBrains IDE settings
+*.sublime-workspace  # Sublime Text workspace
