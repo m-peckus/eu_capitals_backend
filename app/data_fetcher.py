@@ -21,14 +21,10 @@ FIXED_POPULATIONS = {
 # Ireland's fixed population
 IRELAND_POPULATION = 5262000
 
-# 2 SAME FUNCTIONS?
-def format_population(population):
-    """Format population number with dot separators."""
-    return f"{population:,}".replace(",",".") + " residents"
+def format_number(value):
+    """Format population number with dot separators and append 'residents'."""
+    return f"{value:,}".replace(",",".") + " residents"
 
-def format_country_population(population):
-    """Format country population with dot separators."""
-    return f"{population:,}".replace(",",".") + " residents"
 
 async def fetch_weather(session, city, country_code):
     """Fetches temperature data for a city."""
@@ -46,6 +42,7 @@ async def fetch_weather(session, city, country_code):
         
     except Exception as e:
         return f"Weather API error {e}"
+
 
 async def fetch_currency(session, city):
     """Fetches exchange rate if local currency is not Euro."""
@@ -84,32 +81,25 @@ async def fetch_capital_population(session, city):
     }
     headers = {
         "X-RapidAPI-Key": RAPID_API_KEY,
-        "X-RapidAPI-Host": "wtf-geo-db.p.rapidapi.com"
+        "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com"
     }
 
     try:
         async with session.get(url, headers=headers, params=params) as response:
-            if response.status != 200:
-                # API call failed - return fallback data
-                return format_population(eu_data_extended[city].get("city_population", "Unknown"))
-
             data = await response.json()
-            cities = data.get("data",[])
-            if not cities:
-                # No data returned - return fallback
-                return format_population(eu_data_extended[city].get("city_population", "Unknown"))
-            
-            return format_population(cities[0].get("population", eu_data_extended[city].get("city_population", "Unknown")))
+            if response.status != 200 or not data.get("data", []):
+                # API call failed - return fallback data
+                return format_number(eu_data_extended[city].get("city_population", "Unknown"))
+            return format_number(data["data"][0].get("population", eu_data_extended[city]["city_population"]))
         
     except Exception:
-        # Any network/API error - return fallback data from eu_data_extended
-        return format_population(eu_data_extended[city].get("city_population","Unknown"))
+            return format_number(eu_data_extended[city]["city_population"])
 
 
 async def fetch_country_population(session, country):
     """Fetches population data for a country."""
     if country == "Ireland":
-        return format_country_population(IRELAND_POPULATION)
+        return format_number(IRELAND_POPULATION)
 
     url = f"https://restcountries.com/v3.1/name/{country}"
     try:
@@ -118,14 +108,13 @@ async def fetch_country_population(session, country):
             if response.status != 200 or not data or "population" not in data[0]:
                 # fall back logic can be here if needed
                 return f"No population data found for {country}."
-            return format_country_population(data[0]["population"])
+            return format_number(data[0]["population"])
 
     except Exception as e:
         # fall back logic can be here if needed
         return f"Country population API error: {e}"
 
 
-# add more details as needed
 async def fetch_all_data(city, country):
     """Fetches all required API data asynchronously."""
     async with aiohttp.ClientSession() as session:
@@ -145,7 +134,6 @@ async def fetch_all_data(city, country):
         }
     
 
-# add more details as needed
 def get_data(city, country):
     """Runs the async function synchronously for integration in main script."""
     return asyncio.run(fetch_all_data(city, country))

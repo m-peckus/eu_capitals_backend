@@ -25,7 +25,7 @@ while True:
         "- Local temperature\n"
         "- Enter any other city name to check if it's an EU capital.\n- Or press 5 to exit\n"
         "Enter city name : "
-    )
+    ).title().strip()
 
 
     if user_input == '5':
@@ -34,50 +34,25 @@ while True:
     
     clear_screen()
 
-    # Ensure city exists in the extended dictionary
-    #if user_input not in eu_data_extended:
-        #print(f"No data available for {user_input}.")
-    #if user_input.isdigit():
-        #print("Invalid input: Please enter a valid city name, not a number\n")
-    #elif not user_input.isalpha():
-        #print("Invalid input: City names should only contain letters\n")
-    #elif len(user_input) > 12:
-        #print("Invalid input: City names can't exceed 12 characters.\n")
-    #else:
-    user_input = user_input.title()
-    if user_input in eu_data_extended:
-        result = check_eu_capital(user_input)
-        city, country, currency = result
-        data = get_data(city, country)
-    if user_input not in eu_data_extended:
-        pass
-        
+    if user_input.isdigit() or len(user_input) > 12 or not user_input.replace("","").isalpha():
+        print("Invalid input: Enter a valid city name(letters only, max 12 characters)\n")
+        continue
 
-    #if data['temperature'] is None:
-        #print("Unable to retrieve temperature data. Please try again later.")
+    result = check_eu_capital(user_input)
 
     if isinstance(result, tuple) and len(result) == 3:
         city, country, currency = result
+        data = get_data(city, country)
+
+        print(f"{city} is the capital city of {country}.")
+        print(f"- Population of {city}: {data['city_population']}.")
+        print(f"- Population of {country}: {data['country_population']}.")
+        print(f"- Local currency is {currency}.")
         if currency != "Euro":
-            print(
-                f"{city} is a capital city of {country}.\n"
-                f"- Population of {city}: {data['city_population']}.\n"
-                f"- Population of {country}: {data['country_population']}.\n"
-                f"- Local currency is {currency}.\n"
-                f"- 1 {currency} equals to {data['exchange_rate']} Euro.\n"
-                f"- Weather temperature in {city} is {data['temperature']}°C\n"
-                )
-        if currency == "Euro":
-            print(
-                f"{city} is a capital city of {country}.\n"
-                f"- Population of {city}: {data['city_population']}.\n"
-                f"- Population of {country}: {data['country_population']}.\n"
-                f"- Local currency is {currency}.\n"
-                f"- Weather temperature in {city} is {data['temperature']}°C\n"
-                )
-        
+                print(f"- 1 {currency} = {data['exchange_rate']} Euro.")
+
+        print(f"- Weather temperature in {city}: {data['temperature']}°C\n")
     else:
-        print(
-            f"{result} is not a rezognized EU capital.\n"
-            )
+        print(f"{user_input} is not a recognized EU capital.\n")
+
 
