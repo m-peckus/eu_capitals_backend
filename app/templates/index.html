@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EU Capital Info</title>
+</head>
+<body>
+    <h2>Enter a City</h2>
+    <form action="/" method="post">
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Get Info</button>
+    </form>
+
+    {% if result %}
+        {% if result.city_found %}
+            <h3>City: {{ result.city }}</h3>
+            <p>Country: {{ result.country }}</p>
+            <p>Currency: {{ result.currency }}</p>
+        {% else %}
+            <p style="color:red;">Sorry, {{ result.city }} is not an EU capital.</p>
+        {% endif %}
+    {% endif %}
+</body>
+</html>
