@@ -30,3 +30,4 @@ Thumbs.db  # Windows system file
 .vscode/  # VS Code settings
 .idea/  # JetBrains IDE settings
 *.sublime-workspace  # Sublime Text workspace
+.env
