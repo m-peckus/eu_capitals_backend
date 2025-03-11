@@ -12,8 +12,8 @@ app = FastAPI()
 templates = Jinja2Templates(directory="/home/mpeckus/eu_capitals_backend/app/templates")
 
 @app.get("/", response_class=HTMLResponse)
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request":request, "result": None})
+async def home(request: Request, restart: bool = False):
+    return templates.TemplateResponse("index.html", {"request":request, "result": None, "restart": restart})
 
 @app.post("/", response_class=HTMLResponse)
 async def fetch_info(request: Request, city: str = Form(...)):
@@ -40,3 +40,7 @@ async def fetch_info(request: Request, city: str = Form(...)):
         result = {"city_found": False, "city": city}
 
     return templates.TemplateResponse("index.html", {"request": request, "result": result})
+
+@app.get("/exit", response_class=HTMLResponse)
+async def exit_page(request: Request):
+    return templates.TemplateResponse("exit.html", {"request": request})

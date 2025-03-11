@@ -6,14 +6,17 @@
     <title>EU Capitals Info</title>
 </head>
 <body>
-    <h2>EU Capitals Info</h2>
+    {% if restart %}
+        <h2>Welcome Back!</h2>
+    {% endif %}
 
+    <h2>EU Capitals Info</h2>
     <form method="post">
         <label for="city">Enter city name:</label>
         <input type="text" id="city" name="city" required>
-        <button type="submit">Check</button>
-        <a href="/exit"><button>Exit</button></a>
+        <button type="submit">Check city</button>
     </form>
+    <a href="/exit"><button>Exit programme</button></a>
 
     {% if result %}
         {% if result.city_found %}
