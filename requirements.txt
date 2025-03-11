@@ -2,4 +2,6 @@
 aiohttp==3.11.13 # For async HTTP requests
 python-dotenv==1.0.1 # For loading API keys from .env
 requests==2.32.3 # For standard (non-async) HTTP requests
+jinja2==3.1.6 # Latest available version
+python-multipart==0.0.20 # Latest available version
 
