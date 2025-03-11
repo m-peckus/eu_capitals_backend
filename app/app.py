@@ -24,7 +24,7 @@ async def fetch_info(request: Request, city: str = Form(...)):
         currency = eu_data_extended[city]["currency_name"]
 
         # Fetch full data (population, exchange rate, weather, etc.)
-        data = get_data(city, country)
+        data = await get_data(city, country)
 
         result = {
             "city_found": True,

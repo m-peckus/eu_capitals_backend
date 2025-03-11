@@ -134,8 +134,8 @@ async def fetch_all_data(city, country):
         }
     
 
-async def get_data(city, country):
+def get_data(city, country):
 
-    """Runs fetch_all_data() asynchronously."""
-    return await fetch_all_data(city, country)
+    """Runs the async function synchronously for integration in main script."""
+    return asyncio.run(fetch_all_data(city, country))
 
