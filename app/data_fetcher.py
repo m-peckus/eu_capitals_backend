@@ -75,7 +75,7 @@ async def fetch_capital_population(session, city):
     url = f"https://wft-geo-db.p.rapidapi.com/v1/geo/cities"
     params = {
         "namePrefix": city,
-        "countryIds": eu_data[city]["iso_code"],
+        "countryIds": eu_data_extended[city]["iso_code"],
         "limit": 1,
         "minPopulation": 400000
     }
@@ -97,28 +97,32 @@ async def fetch_capital_population(session, city):
 
 
 async def fetch_country_population(session, country):
-    """Fetches population data for a country."""
+    """Fetches population data for a country. Falls back to eu_data_extended if API call fails."""
     if country == "Ireland":
         return format_number(IRELAND_POPULATION)
+
+    # Get a city from eu_data_extended to access the country's stored population
+    city = next(city for city, data in eu_data_extended.items() if data["country"] == country)
 
     url = f"https://restcountries.com/v3.1/name/{country}"
     try:
         async with session.get(url) as response:
             data = await response.json()
             if response.status != 200 or not data or "population" not in data[0]:
-                # fall back logic can be here if needed
-                return f"No population data found for {country}."
+                raise ValueError("Invalid API response")  # Trigger fallback
+                
             return format_number(data[0]["population"])
 
-    except Exception as e:
-        # fall back logic can be here if needed
-        return f"Country population API error: {e}"
+    except Exception:
+        # Fallback: Return stored country population from eu_data_extended
+        return format_number(eu_data_extended[city]["country_population"])
+        
 
 
 async def fetch_all_data(city, country):
     """Fetches all required API data asynchronously."""
     async with aiohttp.ClientSession() as session:
-        country_code = eu_data[city]["iso_code"]
+        country_code = eu_data_extended[city]["iso_code"]
         tasks = [
             fetch_weather(session, city, country_code),
             fetch_currency(session, city),
