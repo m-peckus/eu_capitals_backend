@@ -3,6 +3,7 @@
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 from data_fetcher import get_data
 from nested_eu_data import *
 
@@ -10,6 +11,8 @@ app = FastAPI()
 
 # Load HTML templates
 templates = Jinja2Templates(directory="/home/mpeckus/eu_capitals_backend/app/templates")
+# Load static files
+app.mount("/static", StaticFiles(directory="/home/mpeckus/eu_capitals_backend/app/static"), name="static")
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request, restart: bool = False):
