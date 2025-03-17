@@ -108,11 +108,13 @@
 
     <h2>EU Capitals Quiz</h2>
 
+    {% if previous_answers|length > 0 %}
     <div class="quiz-info">
         <p><strong>Remaining Capitals:</strong> {{ score }}/27</p>
     </div>
+    {% endif %}
 
-    <form method="post">
+    <form action="/" method="post">
         <label for="city">Enter EU Capital:</label>
         <input type="text" id="city" name="city" required>
         <button type="submit">Submit</button>
@@ -128,7 +130,7 @@
                 <p><strong>Country:</strong> {{ result.country }}</p>
                 <p><strong>Population of {{ result.city }}:</strong> {{ result.city_population }}</p>
                 <p><strong>Population of {{ result.country }}:</strong> {{ result.country_population }}</p>
-                <p><strong>Currency:</strong> {{ result.currency }}</p>
+                <p><strong>Currency: </strong> {{ result.currency }}</p>
 
                 {% if result.exchange_rate %}
                     <p><strong>Exchange Rate:</strong> 1 {{ result.currency }} = {{ result.exchange_rate }} EUR</p>
