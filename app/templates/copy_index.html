@@ -100,16 +100,10 @@
         }
 
         .answers-grid {
-            background: #fff;
-            padding: 20px;
-            margin: 10px auto; /* Adjusted margin*/
-            border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             display: grid;
             grid-template-columns: repeat(3, auto);
-            gap: 5px; /* space: vertical 3px horizontal 5px*/
-            max-width: 400px; /* Match result container */
-            text-align: center;
+            gap: 3px; /* space: vertical 3px horizontal 5px*/
+            margin-top: 3px 5px; /* vertical gap(first value) horizontal spacing (second value)*/
         }
 
         .answer-item {
@@ -163,17 +157,17 @@
             {% else %}
                 <p class="error-message">{{ result.city }} is not a recognized EU capital.</p>
             {% endif %}
+        </div>
+    {% endif %}
 
-            {% if previous_answers %}
-               <div class="previous-answers">
-                  <h3>Previously Entered Capitals:</h3>
-                  <div class="answers-grid">
-                    {% for city in previous_answers %}                         
-                      <span class="answer-item">{{ city }}</span>
-                    {% endfor %}
-                  </div>
-                </div>           
-           {% endif %}
+    {% if previous_answers %}
+        <div class="previous-answers">
+            <h3>Previously Entered Capitals:</h3>
+            <div class="answers-grid">
+                {% for city in previous_answers %}
+                    <span class="answer-item">{{ city }}</span>
+                {% endfor %}
+            </div>
         </div>
     {% endif %}
 
