@@ -4,6 +4,7 @@ from user_input import *
 from data_fetcher import get_data
 import os 
 from dotenv import load_dotenv
+import asyncio
 
 # Load environment variables from .env file
 load_dotenv()
@@ -42,7 +43,15 @@ while True:
 
     if isinstance(result, tuple) and len(result) == 3:
         city, country, currency = result
-        data = get_data(city, country)
+        # Line modified on 3/26
+        # Old line
+        #data = get_data(city, country)
+        # New line
+        async def main():
+            data = await get_data(city, country)
+            return data
+        if __name__ == "__main__":
+            data = asyncio.run(main())
 
         print(f"{city} is the capital city of {country}.")
         print(f"- Population of {city}: {data['city_population']}.")
