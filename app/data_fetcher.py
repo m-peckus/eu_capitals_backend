@@ -34,7 +34,7 @@ async def fetch_weather(session, city, country_code):
         async with session.get(url) as response:
             data = await response.json()
             if response.status != 200 or "main" not in data:
-                return f"Error featching weather data for {city}."
+                return f"Error fetching weather data for {city}."
             
             temp_kelvin = data['main']['temp']
             temp_celsius = math.floor(temp_kelvin - 273.15)

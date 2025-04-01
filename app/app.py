@@ -17,13 +17,25 @@ SessionMiddleware_key = os.getenv('Middleware_Key')
 # Initialize FAstAPI app
 app = FastAPI()
 # Add session middleware for storing quiz progress
-app.add_middleware(SessionMiddleware, secret_key="SessionMiddelware_key")
+app.add_middleware(SessionMiddleware, secret_key=SessionMiddleware_key)
 
 # Setup Jinja2 templates for rendering HTML
-templates = Jinja2Templates(directory="/home/mpeckus/eu_capitals_backend/app/templates")
+
+# Old Line 
+# templates = Jinja2Templates(directory="/home/mpeckus/eu_capitals_backend/app/templates")
+
+# New Line from here
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR,"templates"))
+# New Line until here
 
 # Load static files
-app.mount("/static", StaticFiles(directory="/home/mpeckus/eu_capitals_backend/app/static"), name="static")
+# Old Line
+#app.mount("/static", StaticFiles(directory="/home/mpeckus/eu_capitals_backend/app/static"), name="static")
+
+# New Line from here
+app.mount("/static", StaticFiles(directory=os.path.join(BASE_DIR, "static")), name="static")
+# New Line until here
 
 TOTAL_CAPITALS = len(eu_data_extended) # Total number of EU capitals
 
@@ -51,7 +63,11 @@ async def index(request: Request):
     })
 
 @app.post("/")
-async def proccess_city(request: Request, city: str = Form(...)):
+# Old Line
+#async def proccess_city(request: Request, city: str = Form(...)):
+# New Line
+async def proccess_city(request: Request, city: str = Form()):
+
     """Processes user input, updates quiz progress, and displays API results."""
     session = request.session
     city = city.strip().title() # Normalize input
