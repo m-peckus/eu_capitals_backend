@@ -3,24 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <title>EU Capitals Quiz</title>
     <link rel="icon" href="{{ url_for('static', path='favicon.ico')}}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4;*/ /* original version */
+            background-color: #121212; /* test version */
+            color: #ffffff; /* test version */
             text-align: center;
             margin: 0;
             padding: 20px;
         }
         
         h2 {
-            color: #2c3e50;
+            /*color: #2c3e50;*/ /* original version */
+            color: #ffffff; /* test version */
         }
 
         form {
             background: #ffffff;
+            background-color: #121212; /* test version */
             padding: 20px;
+            border: 2px solid white; /* for testing only */
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             display: inline-block;
@@ -28,7 +34,9 @@
         }
 
         label {
-            font-size: 16px;
+            font-size: 17px;
+            letter-spacing: 0.5px;
+            word-spacing: 2px;
             font-weight: bold;
         }
 
@@ -56,29 +64,41 @@
             background-color: #2980b9;
         }
 
-        a button {
+        .exit-button {
             background-color: #e74c3c;
             margin-top: 10px;
         }
 
-        a button:hover {
+        .exit-button:hover {
             background-color: #c0392b;
         }
 
         .result-container {
             background: #fff;
+            background-color: #121212; /* test version */
             padding: 20px;
             margin: 20px auto;
+            border: 2px solid white; /* for testing only */
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             display: inline-block;
             text-align: left;
+            width: 100%; /* for testing only */
             max-width: 400px;
+        }
+        /* for testing only (form & .result-container) */
+        @media (max-width: 768px) {
+            form, .result-container {
+                width: 90%; /* adjust width for smaller screens */
+                max-width: none; /* Remove fixed max-width for flexibility */
+            }
         }
 
         p {
-            font-size: 16px;
+            font-size: 18px; /* original value 16px */
             color: #333;
+            letter-spacing: 0.8px; /* test version */
+            color: #ffffff; /* test version */
         }
 
         .error-message {
@@ -90,35 +110,56 @@
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
-            color: #2c3e50;
+            /*color: #2c3e50;*/ /* original version*/
         }
 
         .previous-answers {
             margin-top: 15px;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: 500;
             color: #555;
+            color: #ffffff; /* test version */
         }
 
         .answers-grid {
             background: #fff;
             padding: 20px;
             margin: 10px auto; /* Adjusted margin*/
+            border: 2px solid #1e90ff; /* for testing only */
             border-radius: 8px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             display: grid;
-            grid-template-columns: repeat(3, auto);
+            grid-template-columns: repeat(2, auto);
             gap: 5px; /* space: vertical 3px horizontal 5px*/
             max-width: 400px; /* Match result container */
             text-align: center;
         }
-
+        
         .answer-item {
             background-color: #f0f0f0; /* Light background for visibility */
+            background-color: #121212; /* test version */
             padding: 3px 5px; /* reduce padding to make items more compact*/
+            border: 1px solid #1e90ff; /* for testing only */
             border-radius: 5px;
             text-align: center;
-            font-weight: bold;
-            white-space: nowrap;
+            font-weight: 500;
+            white-space: normal;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        /* for test only .answer-item*/
+        @media (max-width: 768px) {
+            .answer-item {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+        * {
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
     </style>
@@ -140,26 +181,28 @@
         <label for="city">Enter EU Capital:</label>
         <input type="text" id="city" name="city" required>
         <button type="submit">Submit</button>
+        <!--<a href="/exit"><button>Exit Programme</button></a>-->
+        <button class="exit-button" type="button" onclick="window.location.href='/exit'">Restart Quiz</button>
     </form>
-
+    
     <br>
-    <a href="/exit"><button>Exit Programme</button></a>
 
     {% if result %}
         <div class="result-container">
             {% if result.city_found %}
-                <h3>City: {{ result.city }}</h3>
-                <p><strong>Country:</strong> {{ result.country }}</p>
+                <!--<h3>City: {{ result.city }}</h3>-->
+                <p><strong>{{ result.city }} is a capital city of {{ result.country }}</strong></p>
+                <!--<p><strong>Country:</strong> {{ result.country }}</p>-->
                 <p><strong>Population of {{ result.city }}:</strong> {{ result.city_population }}</p>
                 <p><strong>Population of {{ result.country }}:</strong> {{ result.country_population }}</p>
-                <p><strong>Currency: </strong> {{ result.currency }}</p>
+                <p><strong>Local Currency: </strong> {{ result.currency }}</p>
                 {% if result.currency == "Euro" %}
                     <p><strong>Exchange Rate:</strong> {{ result.exchange_rate }}</p>
                 {% else %}
                     <p><strong>Exchange Rate:</strong> 1 {{ result.currency }} = {{ result.exchange_rate }} EUR</p>
                 {% endif %}
 
-                <p><strong>Weather Temperature:</strong> {{ result.temperature }}°C</p>
+                <p><strong>{{result.city}} Weather:</strong> {{ result.temperature }}°C</p>
             {% else %}
                 <p class="error-message">{{ result.city }} is not a recognized EU capital.</p>
             {% endif %}

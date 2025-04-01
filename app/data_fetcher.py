@@ -58,7 +58,7 @@ async def fetch_currency(session, city):
                 return f"Error fetching exchange rate for {currency}."
             
             exchange_rate = data["rates"].get(currency)
-            return round(1 / exchange_rate, 2) if exchange_rate else f"No exchange rate found."
+            return round(1 / exchange_rate, 4) if exchange_rate else f"No exchange rate found."
     except Exception as e:
         return f"Currency API error: {e}"
     
