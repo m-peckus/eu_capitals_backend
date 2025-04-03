@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <title>EU Capitals Quiz</title>
+    <!-- Old Line -->
     <link rel="icon" href="{{ url_for('static', path='favicon.ico')}}" type="image/x-icon">
     <style>
         body {
             font-family: Arial, sans-serif;
-            /* background-color: #f4f4f4;*/ /* original version */
             background-color: #121212; /* test version */
             color: #ffffff; /* test version */
             text-align: center;
@@ -18,7 +18,6 @@
         }
         
         h2 {
-            /*color: #2c3e50;*/ /* original version */
             color: #ffffff; /* test version */
         }
 
@@ -110,7 +109,6 @@
             margin-top: 20px;
             font-size: 18px;
             font-weight: bold;
-            /*color: #2c3e50;*/ /* original version*/
         }
 
         .previous-answers {
@@ -158,7 +156,7 @@
             }
         }
 
-        * {
+        button, .result-container, .answer-item {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
@@ -181,7 +179,6 @@
         <label for="city">Enter EU Capital:</label>
         <input type="text" id="city" name="city" required>
         <button type="submit">Submit</button>
-        <!--<a href="/exit"><button>Exit Programme</button></a>-->
         <button class="exit-button" type="button" onclick="window.location.href='/exit'">Restart Quiz</button>
     </form>
     
@@ -190,9 +187,7 @@
     {% if result %}
         <div class="result-container">
             {% if result.city_found %}
-                <!--<h3>City: {{ result.city }}</h3>-->
                 <p><strong>{{ result.city }} is a capital city of {{ result.country }}</strong></p>
-                <!--<p><strong>Country:</strong> {{ result.country }}</p>-->
                 <p><strong>Population of {{ result.city }}:</strong> {{ result.city_population }}</p>
                 <p><strong>Population of {{ result.country }}:</strong> {{ result.country_population }}</p>
                 <p><strong>Local Currency: </strong> {{ result.currency }}</p>
