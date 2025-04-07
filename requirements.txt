@@ -1,5 +1,5 @@
 fastapi==0.110.0 # Web framework
-starlette=0.37.2 # Required for FastAPI session middleware
+starlette==0.37.2 # Required for FastAPI session middleware
 aiohttp==3.11.13 # For async HTTP requests
 python-dotenv==1.0.1 # For loading API keys from .env
 requests==2.32.3 # For standard (non-async) HTTP requests
