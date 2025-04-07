@@ -14,7 +14,7 @@ from app.data_fetcher import get_data
 # Old file path works locally
 # from nested_eu_data import eu_data_extended
 # New file path for Render deployment
-from app.nested_eu_data import eu_data_extended
+from .nested_eu_data import eu_data_extended
 
 # Load keys from .env file
 load_dotenv()
