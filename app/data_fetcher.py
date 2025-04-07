@@ -5,7 +5,10 @@ import aiohttp
 import math
 import os
 from dotenv import load_dotenv
-from nested_eu_data import *
+# Old file path
+#from nested_eu_data import *
+# New file path
+from app.nested_eu_data import *
 
 # Load API keys from .env file
 load_dotenv()
