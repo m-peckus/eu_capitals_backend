@@ -1,4 +1,5 @@
 fastapi==0.110.0 # Web framework
+itsdangerous # Package for cryptographic operations
 uvicorn==0.29.0 # Or latest stable version
 aiohttp==3.11.13 # For async HTTP requests
 python-dotenv==1.0.1 # For loading API keys from .env
