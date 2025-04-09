@@ -1,4 +1,4 @@
-<h3 align="center">🇪🇺 EU Capital Quiz App 🇪🇺</h3>
+<h3 align="center">🇪🇺&nbsp; EU Capital Quiz App&nbsp; 🇪🇺</h3>  
 
 
 ![App Demo](app_demo.gif)  
