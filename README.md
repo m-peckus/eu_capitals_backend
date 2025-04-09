@@ -1,5 +1,7 @@
 EU Capital Quiz App
 
+![App Demo](app_demo.gif)  
+
 Overview  
 
 The EU Capital Quiz App is a full-stack web application designed to quiz users on EU capitals.  
