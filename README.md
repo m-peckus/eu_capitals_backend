@@ -1,7 +1,7 @@
 <h3 align="center">🇪🇺&nbsp; EU Capital Quiz App&nbsp; 🇪🇺</h3>  
 
 
-![App Demo](app_demo.gif)  
+![App Demo](app_demo1.gif)  
 
 Overview  
 
